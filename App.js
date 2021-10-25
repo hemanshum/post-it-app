@@ -1,21 +1,42 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import { Headline } from "react-native-paper";
+import AppLoading from "expo-app-loading";
+import {
+  useFonts,
+  Inter_900Black,
+  Inter_100Thin,
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_300Light,
+  Inter_700Bold,
+} from "@expo-google-fonts/inter";
+import { Provider as PaperProvider } from "react-native-paper";
+
+import theme from "./src/theme";
+
+import FeedScreen from "./src/screens/FeedScreen";
 
 export default function App() {
+  let [fontsLoaded] = useFonts({
+    InterThin: Inter_100Thin,
+    InterLite: Inter_300Light,
+    InterReg: Inter_400Regular,
+    InterMid: Inter_500Medium,
+    InterBlack: Inter_900Black,
+    InterBold: Inter_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <PaperProvider theme={theme}>
+      <View>
+        <StatusBar style="auto" />
+        <FeedScreen />
+      </View>
+    </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
